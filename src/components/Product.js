@@ -29,11 +29,7 @@ const Product = ({ title, price, description, image, category }) => {
             <p className="text-sm font-bold my-3">{title}</p>
             {/* Rate Icon */}
             <div className="flex space-x-1">
-                {
-                    Array(rate).fill().map((_, i) => (
-                        <RateStarIcon key={i} />
-                    ))
-                }
+                {Array(rate).fill().map((_, i) => <RateStarIcon key={i} />)}
             </div>
             <p className="text-xs font-semibold md:font-normal md:text-sm my-2 line-clamp-2">{description}</p>
             <div className="text-base font-semibold">

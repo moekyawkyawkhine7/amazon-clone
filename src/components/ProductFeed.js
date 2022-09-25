@@ -6,6 +6,7 @@ const ProductSlice = ({ from = 0, to = 0, productsData = [] }) => {
         <>
             {productsData.slice(from, to).map(({ id, title, price, description, image, category }) => (
                 <Product
+                    key={id}
                     id={id}
                     title={title}
                     price={price}
@@ -22,7 +23,7 @@ const ProductFeed = ({
     productsData = []
 }) => {
     return (
-        <div className="md:-mt-52 grid grid-flow-row-dense grid-cols-1 md:grid-cols-3">
+        <div className="md:-mt-52 grid grid-flow-row-dense grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
             <ProductSlice
                 from={0}
                 to={3}

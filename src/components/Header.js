@@ -1,7 +1,13 @@
 import React from 'react'
 import Image from "next/image";
+// lib
+import { useSession, signIn, signOut } from "next-auth/react";
 
 const Header = () => {
+    const {
+        data
+    } = useSession();
+
     return (
         <header>
             {/* Top Nav */}
@@ -28,8 +34,10 @@ const Header = () => {
                 </div>
                 {/* Right Section */}
                 <div className="text-white space-x-3 flex mx-4 text-xs">
-                    <div className='link'>
-                        <p className='whitespace-nowrap'>Hello, Moe Kyaw Kyaw!</p>
+                    <div onClick={data ? signOut :signIn} className='link'>
+                        <p className='whitespace-nowrap'>
+                            {data ? `Hello, ${data.user.name}!` : 'Sign In'}
+                        </p>
                         <p className="font-extrabold md:text-sm whitespace-nowrap">Account & Lists</p>
                     </div>
                     <div className='link'>
