@@ -17,12 +17,14 @@ const Header = () => {
                     />
                 </div>
                 {/* Search Box  */}
-                <div className="bg-yellow-400 hover:bg-yellow-500 focus:ring-1 hidden sm:flex items-center flex-grow rounded-md h-10">
+                <div className="focus:ring-1 hidden sm:flex items-center flex-grow h-10">
                     <input type="text" name="" id="" className="flex-grow flex-shrink rounded-l-md px-2 focus:outline-none h-full" />
                     {/* Search Icon */}
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 cursor-pointer mx-2 text-black">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                    </svg>
+                    <div className="bg-yellow-400 hover:bg-yellow-500 flex items-center h-full rounded-r-md cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 mx-2 text-black">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                        </svg>
+                    </div>
                 </div>
                 {/* Right Section */}
                 <div className="text-white space-x-3 flex mx-4 text-xs">
@@ -43,6 +45,25 @@ const Header = () => {
                         <p className="font-extrabold md:text-sm mt-2 hidden sm:inline">Basket</p>
                     </div>
                 </div>
+            </div>
+            {/* Bottom Nav */}
+            <div className="text-sm font-medium flex items-center text-white space-x-3 p-2 pl-6 bg-amazon_blue-light">
+                <div className="flex items-center space-x-1">
+                    {/* Menu Icon */}
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                    </svg>
+                    <p>All</p>
+                </div>
+                <p className="link">Prime Video</p>
+                <p className="link">Amazon Business</p>
+                <p className="link">Today's Deals</p>
+                <p className="link hidden lg:inline-flex">Electronics</p>
+                <p className="link hidden lg:inline-flex">Food & Grocery</p>
+                <p className="link hidden lg:inline-flex">Prime</p>
+                <p className="link hidden lg:inline-flex">Buy Again</p>
+                <p className="link hidden lg:inline-flex">Shopper Toolkit</p>
+                <p className="link hidden lg:inline-flex">Health & Personal Care</p>
             </div>
         </header>
     )
