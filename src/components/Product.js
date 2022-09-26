@@ -1,6 +1,9 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Image from 'next/image';
 import Currency from 'react-currency-formatter';
+import { BasketContext } from '../store/context/BasketProvider';
+import { ADD_TO_BASKET } from '../store/actionTypes';
+import PrimeStatus from './PrimeStatus';
 
 const RateStarIcon = () => {
     return (
@@ -14,11 +17,28 @@ const MAX_RATING = 5;
 const MIN_RATING = 1;
 
 const Product = ({ title, price, description, image, category }) => {
+
+    const [_, dispatch] = useContext(BasketContext);
+
     const [rate] = useState(
         Math.floor(Math.random() * (MAX_RATING - MIN_RATING + 1)) + MIN_RATING
     );
 
     const [hasPrime] = useState(Math.random() < 0.5);
+
+    const addToBasket = () => {
+        let product = {
+            title,
+            price,
+            description,
+            image,
+            category,
+            rate,
+            hasPrime,
+            id: new Date().getTime()
+        }
+        dispatch({ type: ADD_TO_BASKET, payload: product });
+    }
 
     return (
         <div className="bg-white hover:shadow-xl hover:scale-105 transform transition duration-300 ease-out flex flex-col relative p-10 m-5 rounded-md shadow-md z-30">
@@ -35,13 +55,8 @@ const Product = ({ title, price, description, image, category }) => {
             <div className="text-base font-semibold">
                 <Currency quantity={price} />
             </div>
-            {hasPrime && (
-                <div className="flex items-center space-x-2">
-                    <img src="https://links.papareact.com/fdw" className="w-12 h-12" alt="prime icon" />
-                    <p className='text-xs text-gray-500 mb-0.5'>FREE Next-day Delivery</p>
-                </div>
-            )}
-            <button className="button">Add to Basket</button>
+            <PrimeStatus hasPrime={hasPrime} />
+            <button onClick={addToBasket} className="button">Add to Basket</button>
         </div>
     )
 }

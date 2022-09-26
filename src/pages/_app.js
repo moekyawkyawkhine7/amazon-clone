@@ -1,6 +1,5 @@
-import { Provider } from 'react-redux'
-import { store } from '../app/store'
 import { SessionProvider } from "next-auth/react"
+import BasketProvider from "../store/context/BasketProvider"
 import '../styles/globals.css'
 
 const MyApp = ({
@@ -12,9 +11,9 @@ const MyApp = ({
 }) => {
   return (
     <SessionProvider session={session}>
-      <Provider store={store}>
+      <BasketProvider>
         <Component {...pageProps} />
-      </Provider>
+      </BasketProvider>
     </SessionProvider>
   )
 }

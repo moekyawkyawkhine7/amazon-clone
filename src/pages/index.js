@@ -13,7 +13,7 @@ export default function Home({
         <title>Amazon 2.0</title>
       </Head>
       <Header />
-      <main className="max-w-screen-2xl mx-auto bg-gray-100">
+      <main className="breakout-point">
         {/* Banner */}
         <Banner />
         {/* Product Feed */}
