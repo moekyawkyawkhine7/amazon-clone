@@ -13,7 +13,7 @@ const CheckOut = () => {
 
     const [state] = useContext(BasketContext);
     let { items } = state;
-    const totalPrice = items.reduce((total, data) => total + data.price, 0);
+    const totalPrice = items.reduce((total, data) => total + (data.price * data.qty), 0);
 
     return (
         <div>
@@ -42,7 +42,9 @@ const CheckOut = () => {
                                     image,
                                     category,
                                     rate,
-                                    hasPrime }, i) => (
+                                    hasPrime,
+                                    qty
+                                 }, i) => (
                                     <CheckOutProduct
                                         key={i}
                                         id={id}
@@ -53,6 +55,7 @@ const CheckOut = () => {
                                         category={category}
                                         rate={rate}
                                         hasPrime={hasPrime}
+                                        qty={qty}
                                     />
                                 ))
                             )
