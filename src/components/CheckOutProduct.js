@@ -50,11 +50,11 @@ const CheckOutProduct = ({
                 <div className="flex">
                     {Array(rate).fill().map((_, i) => <AiOutlineStar className="text-yellow-500" key={i} />)}
                 </div>
-                <p className="text-xs font-semibold md:font-normal md:text-sm my-2 line-clamp-3">{description}</p>
+                <p className="text-xs font-semibold md:font-normal md:text-sm mt-2 line-clamp-3">{description}</p>
+                <PrimeStatus hasPrime={hasPrime} />
                 <div className="font-bold text-lg">
                     <Currency quantity={price} /> <span className='text-sm'>x {qty} =</span> <Currency quantity={qty * price} />
                 </div>
-                <PrimeStatus hasPrime={hasPrime} />
             </div>
             {/* Third */}
             <div className="flex flex-col justify-center">
