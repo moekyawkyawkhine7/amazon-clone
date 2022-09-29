@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import Header from '../components/Header'
 import Image from 'next/image'
 import { BasketContext } from '../store/context/BasketProvider';
@@ -7,6 +7,7 @@ import Currency from 'react-currency-formatter';
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import { loadStripe } from '@stripe/stripe-js';
+import { ADD_LOCAL_DATA_TO_BASKET } from '../store/actionTypes';
 const stripePromise = loadStripe(`${process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY}`);
 
 const CheckOut = () => {
@@ -14,9 +15,16 @@ const CheckOut = () => {
         data
     } = useSession();
 
-    const [state] = useContext(BasketContext);
+    const [state, dispatch] = useContext(BasketContext);
     let { items } = state;
     const totalPrice = items.reduce((total, data) => total + (data.price * data.qty), 0);
+
+    useEffect(() => {
+        dispatch({
+            type: ADD_LOCAL_DATA_TO_BASKET,
+            payload: localStorage.getItem("items") ? JSON.parse(localStorage.getItem("items")) : []
+        });
+    }, [])
 
     const createCheckOutSession = async () => {
         const stripe = await stripePromise;
@@ -88,7 +96,7 @@ const CheckOut = () => {
                             <Currency quantity={totalPrice} />
                         </span>
                     </p>
-                    {data ? <button onClick={createCheckOutSession} className="button px-3 mt-1">Proceed to checkout</button> : (
+                    {data ? <button onClick={createCheckOutSession} disabled={items.length === 0} className={`button px-3 mt-1 ${items.length === 0 && 'cursor-not-allowed opacity-50'}`}>Proceed to checkout</button> : (
                         <button className="button mt-1 px-3 from-gray-100 focus:ring-gray-100 to-gray-400 active:from-gray-400 active:ring-gray-400">Sign in to checkout </button>
                     )}
                 </div>
