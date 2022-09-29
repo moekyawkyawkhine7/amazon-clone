@@ -5,6 +5,9 @@ import { BasketContext } from '../store/context/BasketProvider';
 import CheckOutProduct from '../components/CheckOutProduct';
 import Currency from 'react-currency-formatter';
 import { useSession } from 'next-auth/react';
+import axios from 'axios';
+import { loadStripe } from '@stripe/stripe-js';
+const stripePromise = loadStripe(`${process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY}`);
 
 const CheckOut = () => {
     const {
@@ -14,6 +17,22 @@ const CheckOut = () => {
     const [state] = useContext(BasketContext);
     let { items } = state;
     const totalPrice = items.reduce((total, data) => total + (data.price * data.qty), 0);
+
+    const createCheckOutSession = async () => {
+        const stripe = await stripePromise;
+        let email = data?.email;
+        // Call the backend to create a checkout session...
+        let createSession = await axios.post("api/create-checkout-session", {
+            email,
+            items
+        });
+
+        // Redirect user to Stripe Checkout
+        const result = await stripe.redirectToCheckout({
+            sessionId: createSession.data.id
+        })
+        console.log("result", result)
+    }
 
     return (
         <div>
@@ -44,7 +63,7 @@ const CheckOut = () => {
                                     rate,
                                     hasPrime,
                                     qty
-                                 }, i) => (
+                                }, i) => (
                                     <CheckOutProduct
                                         key={i}
                                         id={id}
@@ -69,7 +88,7 @@ const CheckOut = () => {
                             <Currency quantity={totalPrice} />
                         </span>
                     </p>
-                    {data ? <button className="button px-3 mt-1">Proceed to checkout</button> : (
+                    {data ? <button onClick={createCheckOutSession} className="button px-3 mt-1">Proceed to checkout</button> : (
                         <button className="button mt-1 px-3 from-gray-100 focus:ring-gray-100 to-gray-400 active:from-gray-400 active:ring-gray-400">Sign in to checkout </button>
                     )}
                 </div>
