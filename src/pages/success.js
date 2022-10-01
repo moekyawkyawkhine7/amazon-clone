@@ -6,7 +6,7 @@ const success = () => {
   return (
     <div className="h-screen bg-gray-100">
       <Header />
-      <main className="breakout-point py-2">
+      <main className="breakout-point p-1 md:py-2">
         <div className="w-full text-sm space-y-5 hover:shadow-lg py-5 px-5 md:w-6/12 mx-auto bg-white shadow-md rounded-md">
           <div className="flex items-center space-x-2">
             <AiOutlineCheckCircle
