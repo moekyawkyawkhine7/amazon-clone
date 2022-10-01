@@ -1,9 +1,10 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import Image from "next/image";
 // lib
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 import { BasketContext } from '../store/context/BasketProvider';
+import { ADD_LOCAL_DATA_TO_BASKET } from '../store/actionTypes';
 
 const Header = () => {
     const {
@@ -11,7 +12,14 @@ const Header = () => {
     } = useSession();
 
     let router = useRouter();
-    const [state] = useContext(BasketContext);
+    const [state, dispatch] = useContext(BasketContext);
+
+    useEffect(() => {
+        dispatch({
+            type: ADD_LOCAL_DATA_TO_BASKET,
+            payload: localStorage.getItem("items") ? JSON.parse(localStorage.getItem("items")) : []
+        });
+    }, [])
 
     return (
         <header>

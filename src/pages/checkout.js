@@ -8,6 +8,7 @@ import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import { loadStripe } from '@stripe/stripe-js';
 import { ADD_LOCAL_DATA_TO_BASKET } from '../store/actionTypes';
+// Stripe 
 const stripePromise = loadStripe(`${process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY}`);
 
 const CheckOut = () => {
@@ -15,20 +16,17 @@ const CheckOut = () => {
         data
     } = useSession();
 
-    const [state, dispatch] = useContext(BasketContext);
+    const [state] = useContext(BasketContext);
     let { items } = state;
     const totalPrice = items.reduce((total, data) => total + (data.price * data.qty), 0);
 
-    useEffect(() => {
-        dispatch({
-            type: ADD_LOCAL_DATA_TO_BASKET,
-            payload: localStorage.getItem("items") ? JSON.parse(localStorage.getItem("items")) : []
-        });
-    }, [])
-
     const createCheckOutSession = async () => {
         const stripe = await stripePromise;
-        let email = data?.email;
+        let {
+            user: {
+                email
+            }
+        } = data;
         // Call the backend to create a checkout session...
         let createSession = await axios.post("api/create-checkout-session", {
             email,

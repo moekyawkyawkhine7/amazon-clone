@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import Currency from 'react-currency-formatter';
 import PrimeStatus from './PrimeStatus';
 import Image from 'next/image';
-import { ADD_TO_BASKET, DESCREASE_ITEM_FROM_BASKET, INCREASE_ITEM_TO_BASKET, REMOVE_FROM_BASKET } from '../store/actionTypes';
+import { DESCREASE_ITEM_FROM_BASKET, INCREASE_ITEM_TO_BASKET, REMOVE_FROM_BASKET } from '../store/actionTypes';
 import { BasketContext } from '../store/context/BasketProvider';
 import { AiOutlinePlus, AiOutlineMinus, AiOutlineStar } from 'react-icons/ai';
 

@@ -24,7 +24,6 @@ const reducer = (state, action) => {
             return {
                 items: [...modifiedItems]
             };
-
         case REMOVE_FROM_BASKET: {
             let modifiedItems = state.items.filter(_data => _data.id !== action.payload.id);
             // remove item from localStorage
