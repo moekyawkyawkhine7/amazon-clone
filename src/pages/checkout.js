@@ -7,7 +7,6 @@ import Currency from 'react-currency-formatter';
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import { loadStripe } from '@stripe/stripe-js';
-import { ADD_LOCAL_DATA_TO_BASKET } from '../store/actionTypes';
 // Stripe 
 const stripePromise = loadStripe(`${process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY}`);
 
@@ -34,10 +33,9 @@ const CheckOut = () => {
         });
 
         // Redirect user to Stripe Checkout
-        const result = await stripe.redirectToCheckout({
+        await stripe.redirectToCheckout({
             sessionId: createSession.data.id
         })
-        console.log("result", result)
     }
 
     return (

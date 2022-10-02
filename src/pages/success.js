@@ -1,8 +1,22 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import Header from "../components/Header";
 import { AiOutlineCheckCircle } from "react-icons/ai";
+import { useRouter } from 'next/router';
+import { BasketContext } from '../store/context/BasketProvider';
+import { CLEAR_ALL_ITEMS } from '../store/actionTypes';
 
 const success = () => {
+  let router = useRouter();
+  let [_, dispatch] = useContext(BasketContext);
+
+  useEffect(() => {
+    localStorage.removeItem("items");
+    dispatch({
+      type: CLEAR_ALL_ITEMS,
+      payload: null
+    })
+  }, [])
+
   return (
     <div className="h-screen bg-gray-100">
       <Header />
@@ -13,12 +27,12 @@ const success = () => {
               className="w-8 h-8 text-green-500"
             />
             <p className="text-lg font-semibold">Thank You, your order has been confirmed!</p>
+          </div>
+          <p>
+            Thank you for shopping with us. We'll send a confirmation once your item has been shipped. If you would like to check the status of your order, please press the link below.
+          </p>
+          <button onClick={() => router.push("/orders")} className="button w-full">Go to my orders</button>
         </div>
-        <p>
-          Thank you for shopping with us. We'll send a confirmation once your item has been shipped. If you would like to check the status of your order, please press the link below.
-        </p>
-        <button className="button w-full">Go to my orders</button>
-    </div>
       </main >
     </div >
   )

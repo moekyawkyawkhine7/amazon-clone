@@ -1,5 +1,5 @@
 import { createContext, useReducer } from "react";
-import { ADD_LOCAL_DATA_TO_BASKET, ADD_TO_BASKET, DESCREASE_ITEM_FROM_BASKET, INCREASE_ITEM_TO_BASKET, REMOVE_FROM_BASKET } from "../actionTypes";
+import { ADD_LOCAL_DATA_TO_BASKET, ADD_TO_BASKET, CLEAR_ALL_ITEMS, DESCREASE_ITEM_FROM_BASKET, INCREASE_ITEM_TO_BASKET, REMOVE_FROM_BASKET } from "../actionTypes";
 
 export const BasketContext = createContext(null);
 
@@ -61,6 +61,11 @@ const reducer = (state, action) => {
         case ADD_LOCAL_DATA_TO_BASKET: {
             return {
                 items: action.payload
+            }
+        }
+        case CLEAR_ALL_ITEMS: {
+            return {
+                items: []
             }
         }
         default:
