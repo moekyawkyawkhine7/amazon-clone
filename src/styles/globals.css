@@ -4,7 +4,11 @@
 
 @layer components {
     .link {
-        @apply cursor-pointer hover:underline;
+        @apply capitalize cursor-pointer hover:underline;
+    }
+
+    .active-link{
+        @apply bg-white rounded-md text-amazon_blue;
     }
 
     .button {

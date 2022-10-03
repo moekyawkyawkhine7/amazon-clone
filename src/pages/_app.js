@@ -4,6 +4,7 @@ import '../styles/globals.css'
 import Router from 'next/router'
 import ProgressBar from '@badrap/bar-of-progress';
 import { Toaster } from "react-hot-toast";
+import HomeItemsProvider from "../store/context/HomeItemsProvider";
 
 const progress = new ProgressBar({
   size: 3,
@@ -25,10 +26,12 @@ const MyApp = ({
 }) => {
   return (
     <SessionProvider session={session}>
-      <BasketProvider>
-        <Component {...pageProps} />
-        <Toaster />
-      </BasketProvider>
+      <HomeItemsProvider>
+        <BasketProvider>
+          <Component {...pageProps} />
+          <Toaster />
+        </BasketProvider>
+      </HomeItemsProvider>
     </SessionProvider>
   )
 }
