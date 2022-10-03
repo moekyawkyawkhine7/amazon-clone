@@ -1,6 +1,7 @@
 import moment from 'moment/moment';
-import { getSession } from 'next-auth/react';
+import { getSession, signIn } from 'next-auth/react';
 import React from 'react'
+import Footer from '../components/Footer';
 import Header from "../components/Header";
 import MyOrder from '../components/MyOrder';
 import db from '../firebase';
@@ -8,8 +9,6 @@ import db from '../firebase';
 const orders = ({
     orders = []
 }) => {
-
-    console.log("orders:", orders)
 
     return (
         <div className="h-screen">
@@ -31,10 +30,13 @@ const orders = ({
                                     timestamp={timestamp}
                                 />
                             ))
-                        ) : "No Orders"}
+                        ) : (
+                            <button onClick={signIn} className="button m-1 md:mt-1 md:mx-0 md:mb-0 px-3 from-gray-100 focus:ring-gray-100 to-gray-400 active:from-gray-400 active:ring-gray-400">Sign in to see orders</button>
+                        )}
                     </div>
                 </div>
             </main >
+            <Footer />
         </div >
     )
 }

@@ -1,6 +1,7 @@
 import { getSession } from "next-auth/react";
 import Head from "next/head";
 import Banner from "../components/Banner";
+import Footer from "../components/Footer";
 // comp
 import Header from "../components/Header";
 import ProductFeed from "../components/ProductFeed";
@@ -9,7 +10,7 @@ export default function Home({
   productsData = []
 }) {
   return (
-    <div>
+    <div id="nav-top">
       <Head>
         <title>Amazon 2.0</title>
       </Head>
@@ -20,6 +21,10 @@ export default function Home({
         {/* Product Feed */}
         <ProductFeed productsData={productsData} />
       </main>
+      <div className=" bg-amazon_blue-light hover:bg-amazon_blue-lighter py-4 flex justify-center cursor-pointer">
+        <a href="#nav-top" className="text-sm text-gray-200">Back to top</a>
+      </div>
+      <Footer />
     </div>
   );
 }

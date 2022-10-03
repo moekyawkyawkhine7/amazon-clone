@@ -4,6 +4,7 @@ import { AiOutlineCheckCircle } from "react-icons/ai";
 import { useRouter } from 'next/router';
 import { BasketContext } from '../store/context/BasketProvider';
 import { CLEAR_ALL_ITEMS } from '../store/actionTypes';
+import Footer from '../components/Footer';
 
 const success = () => {
   let router = useRouter();
@@ -20,7 +21,7 @@ const success = () => {
   return (
     <div className="h-screen bg-gray-100">
       <Header />
-      <main className="breakout-point p-1 md:py-2">
+      <main className="breakout-point h-full p-1 md:py-2">
         <div className="w-full text-sm space-y-5 hover:shadow-lg py-5 px-5 md:w-6/12 mx-auto bg-white shadow-md rounded-md">
           <div className="flex items-center space-x-2">
             <AiOutlineCheckCircle
@@ -34,6 +35,7 @@ const success = () => {
           <button onClick={() => router.push("/orders")} className="button w-full">Go to my orders</button>
         </div>
       </main >
+      <Footer />
     </div >
   )
 }

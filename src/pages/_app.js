@@ -3,6 +3,7 @@ import BasketProvider from "../store/context/BasketProvider"
 import '../styles/globals.css'
 import Router from 'next/router'
 import ProgressBar from '@badrap/bar-of-progress';
+import { Toaster } from "react-hot-toast";
 
 const progress = new ProgressBar({
   size: 3,
@@ -26,6 +27,7 @@ const MyApp = ({
     <SessionProvider session={session}>
       <BasketProvider>
         <Component {...pageProps} />
+        <Toaster />
       </BasketProvider>
     </SessionProvider>
   )
