@@ -54,7 +54,7 @@ const CheckOut = () => {
                 <div className="flex-grow mx-1">
                     <Image
                         src='https://links.papareact.com/ikj'
-                        objectFit='contain'
+                        objectFit='cover'
                         width={1020}
                         height={250}
                     />

@@ -9,18 +9,24 @@ import Header from "../components/Header";
 import ProductFeed from "../components/ProductFeed";
 import { SET_ALL_ITEMS } from "../store/actionTypes";
 import { HomeItemsContext } from "../store/context/HomeItemsProvider";
+import _ from "lodash";
+import { useRouter } from "next/router";
 
 export default function Home({
   productsData = []
 }) {
 
   let [{ items }, dispatch] = useContext(HomeItemsContext);
+  let router = useRouter();
 
   useEffect(() => {
     if (productsData.length > 0)
       dispatch({
         type: SET_ALL_ITEMS,
-        payload: productsData
+        payload: {
+          productsData,
+          searchData: _.isEmpty(router.query) ? "" : router.query.searchData
+        }
       })
   }, [productsData])
 

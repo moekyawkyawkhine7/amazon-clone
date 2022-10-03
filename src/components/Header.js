@@ -3,11 +3,12 @@ import Image from "next/image";
 // lib
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
-import { ADD_LOCAL_DATA_TO_BASKET, SEARCH_DATA, SET_ALL_ITEMS } from '../store/actionTypes';
+import { ADD_LOCAL_DATA_TO_BASKET, FILTER_CAT, SET_ALL_ITEMS } from '../store/actionTypes';
 import { HomeItemsContext } from '../store/context/HomeItemsProvider';
 import { BasketContext } from '../store/context/BasketProvider';
 import { MdClear } from "react-icons/md";
 import { BsFilterCircleFill } from "react-icons/bs";
+import _ from "lodash";
 
 const Header = () => {
     const {
@@ -17,9 +18,10 @@ const Header = () => {
     let router = useRouter();
     const [state, dispatch] = useContext(BasketContext);
     const [{ oriItems }, homeDispatch] = useContext(HomeItemsContext);
-    const [searchData, setSearchData] = useState("");
-    const [filterData, setFilterData] = useState([]);
+    const [searchData, setSearchData] = useState(_.isEmpty(router.query) ? "" : router.query.searchData);
+    const [filterCatData, setFilterCatData] = useState("all");
 
+    // for basket
     useEffect(() => {
         dispatch({
             type: ADD_LOCAL_DATA_TO_BASKET,
@@ -27,20 +29,32 @@ const Header = () => {
         });
     }, [])
 
-    const handleSearch = () => {
+    // for homeItems
+    useEffect(() => {
         homeDispatch({
-            type: SEARCH_DATA,
+            type: FILTER_CAT,
             payload: {
-                searchData: searchData.trim()
+                cat: filterCatData
             }
         })
+    }, [filterCatData])
+
+    const handleSearch = () => {
+        router.push({
+            pathname: "/",
+            query: { searchData: searchData.trim() }
+        });
     }
 
-    const clearSearchData = () => {
+    const clearSearchData = async () => {
+        if (!_.isEmpty(router.query)) await router.push("/");
         setSearchData("");
         homeDispatch({
             type: SET_ALL_ITEMS,
-            payload: oriItems
+            payload: {
+                productsData: oriItems,
+                searchData: ""
+            }
         })
     }
 
@@ -49,18 +63,6 @@ const Header = () => {
     }
 
     let categories = oriItems.map(_data => _data.category).filter(distinct);
-
-    const handleCatFilter = (cat) => {
-        if (filterData.includes(cat))
-            setFilterData(filterData.filter(_cat => _cat !== cat))
-        else
-            setFilterData(prev => (
-                [
-                    ...prev,
-                    cat
-                ]
-            ))
-    }
 
     return (
         <header>
@@ -114,13 +116,13 @@ const Header = () => {
             </div>
             {/* Bottom Nav */}
             <div className={`${router.pathname === "/" ? 'flex' : 'hidden'} text-sm font-medium items-center text-white space-x-3 p-2 pl-6 bg-amazon_blue-light`}>
-                <div className="flex items-center space-x-1">
+                <div className="flex items-center">
                     {/* Category Icon  */}
                     <BsFilterCircleFill className="w-7 h-7" />
                 </div>
                 {oriItems?.length > 0 && (
-                    categories.filter(distinct).map((_cat, i) => (
-                        <p key={`cat1_${i}`} onClick={() => handleCatFilter(_cat)} className={`py-2 px-2 link ${filterData.includes(_cat) && 'active-link'}`}>{_cat}</p>
+                    ["all", ...categories.filter(distinct)].map((_cat, i) => (
+                        <p key={`cat1_${i}`} onClick={() => setFilterCatData(_cat)} className={`py-2 px-2 link ${filterCatData === _cat && 'active-link'}`}>{_cat}</p>
                     ))
                 )}
             </div>

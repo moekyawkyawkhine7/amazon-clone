@@ -1,5 +1,5 @@
 import { createContext, useReducer } from "react";
-import { SEARCH_DATA, SET_ALL_ITEMS } from "../actionTypes";
+import { FILTER_CAT, SET_ALL_ITEMS } from "../actionTypes";
 
 export const HomeItemsContext = createContext(null);
 
@@ -11,12 +11,15 @@ const initialState = {
 const reducer = (state, action) => {
     switch (action.type) {
         case SET_ALL_ITEMS:
+            let productsData= action.payload.productsData;
             return {
-                items: action.payload,
-                oriItems: action.payload
+                items: action.payload.searchData ? productsData.filter(_item => _item.title.toLowerCase().includes(action.payload.searchData.toLowerCase())) : productsData,
+                oriItems: productsData
             };
-        case SEARCH_DATA: {
-            let modifiedItems = state.oriItems.filter(_item => _item.title.toLowerCase().includes(action.payload.searchData.toLowerCase()));
+        case FILTER_CAT: {
+            let modifiedItems= [...state.oriItems];
+            if(action.payload.cat !== "all")
+                modifiedItems= modifiedItems.filter(_data => _data.category === action.payload.cat);
             return {
                 ...state,
                 items: modifiedItems
