@@ -21,16 +21,16 @@ export default function Home({
         {/* Product Feed */}
         <ProductFeed productsData={productsData} />
       </main>
-      <div className=" bg-amazon_blue-light hover:bg-amazon_blue-lighter py-4 flex justify-center cursor-pointer">
-        <a href="#nav-top" className="text-sm text-gray-200">Back to top</a>
-      </div>
+      <a href="#nav-top" className="text-sm text-gray-200 bg-amazon_blue-light hover:bg-amazon_blue-lighter py-4 flex justify-center cursor-pointer">
+        Back to top
+      </a>
       <Footer />
     </div>
   );
 }
 
 export async function getServerSideProps(context) {
-  let session= await getSession(context);
+  let session = await getSession(context);
   let productsApi = await fetch("https://fakestoreapi.com/products");
   let productsData = await productsApi.json();
   return {
